@@ -22,8 +22,8 @@ jobs:
           # 获取最新版本号
           latest_release=$(curl -s https://api.github.com/repos/naiba/nezha/releases/latest | grep "tag_name" | cut -d'"' -f4)
           # 处理版本号比较
-          if [[ "$latest_release" == "$env_version" ]]; then
-            echo "版本号一致，无需更新"
+          if [[ "$latest_release" == "$env_version" || -z "$latest_release" ]]; then
+            echo "版本号一致/获取失败，无需更新"
             echo "new_release=no" >> $GITHUB_ENV
           else
             echo "新版本可用，正在更新..."
